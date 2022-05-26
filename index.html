@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Countdown 倒计时</title>
+<script type="text/javascript" src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+
+<style>
+.button {
+    background-color: #1C55D1;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    margin-top: 10px;
+}
+input[type=text] {
+  width: 10%;
+  padding: 10px 20px;
+  box-sizing: border-box;
+
+  margin-left: 30px;
+  margin-top: 10px;
+}
+span{
+  margin-left: 30px;
+}
+select {
+  width: 5%;
+  padding: 16px 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #f1f1f1;
+}
+#time{
+  margin-top: 30px;
+}
+</style>
+<script>
+  function dateFormat(fmt, date) {
+      let ret;
+      const opt = {
+          "Y+": date.getFullYear().toString(),        // 年
+          "m+": (date.getMonth() + 1).toString(),     // 月
+          "d+": date.getDate().toString(),            // 日
+          "H+": date.getHours().toString(),           // 时
+          "M+": date.getMinutes().toString(),         // 分
+          "S+": date.getSeconds().toString()          // 秒
+          // 有其他格式化字符需求可以继续添加，必须转化成字符串
+      };
+      for (let k in opt) {
+          ret = new RegExp("(" + k + ")").exec(fmt);
+          if (ret) {
+              fmt = fmt.replace(ret[1], (ret[1].length == 1) ? (opt[k]) : (opt[k].padStart(ret[1].length, "0")))
+          };
+      };
+      return fmt;
+  }
+
+
+
+  $(document).ready(function(){
+    $("#mp3").change(function(){
+      var mp3=new Audio($("#mp3").val());
+      mp3.play();
+      console.log("12");
+    });
+});
+
+
+window.onload = function() {
+    for30();
+}
+
+function for30() {
+    setTimeout(for30, 1000 * 1 * 1); //这里的1000表示1秒有1000毫秒,1分钟有60秒,5表示总共5分钟
+    var date= new Date();
+    var datestr = dateFormat("YYYY-mm-dd HH:MM:SS",date);
+    document.getElementById("date").innerHTML= datestr;
+
+    var a = document.getElementById("time").innerHTML;
+    var ss = $("#inputval").val();
+    if(ss==""){
+      ss = 30;
+    }
+    a--;
+    if(a<='0'){
+      document.getElementById("time").innerHTML= ss;
+      var mp3=new Audio($("#mp3").val());
+      mp3.play();
+      document.getElementById("time").style="font-size: 580px; color:#1C55D1"
+    }else if(a<='10'){
+
+      document.getElementById("time").innerHTML= a;
+      document.getElementById("time").style="font-size: 580px; color: red;"
+    }else {
+      document.getElementById("time").innerHTML= a;
+      document.getElementById("time").style="font-size: 580px; color:#1C55D1"
+    }
+}
+
+function setval(){
+  var ss = $("#inputval").val();
+  document.getElementById("time").innerHTML = ss;
+}
+
+
+</script>
+
+</head>
+<body align="center">
+  <input id="inputval" type="text" placeholder="倒计秒数 默认30s">
+  </input>
+  <button onclick="setval()" class="button">重置</button>
+  <span class="span">提示音</span>
+  <select id="mp3" name="mp3">
+    <option value="1.mp3">闪亮音</optiotn>
+      <option value="2.mp3" selected>冒泡音</option>
+      <option value="3.mp3">水泡音</option>
+      <option value="4.mp3">灯泡音</option>
+      <option value="5.mp3">当当音</option>
+      <option value="6.mp3">蜂铃音</option>
+  </select>
+  <span id="date">
+  </span>
+  <br/>
+  <span id="time" style="font-size: 580px; color:#1C55D1">31</span>
+  <div id="footer">
+    <a href="https://github.com/loveincode/countdown" target="_blank">countdown</a>Design By
+    <a href="https://github.com/loveincode" target="_blank">loveincode</a>
+    <br>
+  </div>
+</body>
+
+</html>
